@@ -14,6 +14,15 @@ class BlogTest extends PHPUnit_Framework_TestCase {
             // getQueuedPosts
             array(function () { Tumblr\API::getQueuedPosts(); }, 'GET', '/posts/queue', array()),
 
+            // getDraftPosts
+            array(function () { Tumblr\API::getDraftPosts(); }, 'GET', '/posts/draft', array()),
+
+            // getSubmissionPosts
+            array(function () { Tumblr\API::getSubmissionPosts(); }, 'GET', '/posts/submission', array()),
+
+            // getPostByID
+            array(function () { Tumblr\API::getPostByID(123); }, 'GET', '/posts', array('id' => 123, 'api_key' => API_KEY)),
+
         );
     }
 
@@ -22,14 +31,20 @@ class BlogTest extends PHPUnit_Framework_TestCase {
      */
     public function testCalls($callable, $type, $path, $params) {
         // Build a mock
-        $instance = $this->getMockBuilder('Tumblr\API\Request')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $instance = $this->getMock('stdClass', array('request'));
+
+        // Response build
+        $response = null;
+        $response->posts = array();
 
         // And then set it to check for the proper response (one time)
         $instance->expects($this->once())
             ->method('request')
-            ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params));
+            ->with($this->equalTo($type), $this->equalTo($path), $this->equalTo($params))
+            ->will($this->returnValue($response));
+
+        // Set the instance to have an api_key
+        $instance->api_key = API_KEY;
 
         // Set this mock as the Singleton
         $ref = new ReflectionClass('Singleton');

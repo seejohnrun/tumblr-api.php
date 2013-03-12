@@ -9,7 +9,7 @@ abstract class Request extends Authentication
 {
 	// API Request endpoint
 	const API_BASE = "http://api.tumblr.com/v2/blog/%s%s";
-		
+
 	// This method is used for API calls which don't need OAuth signing
 	private function makeCurlRequest($method, $url, $params = array(), $headers = array()) {
 		$ch = curl_init($url);

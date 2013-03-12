@@ -79,7 +79,7 @@ class API extends \Tumblr\API\Request
 		}
 		
 		$obj = $instance->request("GET", $path, $options, false);
-		
+
 		if($obj !== FALSE && $decorated) {
 			$obj->raw_posts = $obj->posts;
 			$obj->posts = array();
@@ -94,17 +94,17 @@ class API extends \Tumblr\API\Request
 	
 	public static function getQueuedPosts() {
 		$instance = self::getInstance();
-		return $instance->request("GET", "/posts/queue");
+		return $instance->request("GET", "/posts/queue", array());
 	}
 	
 	public static function getDraftPosts() {
 		$instance = self::getInstance();
-		return $instance->request("GET", "/posts/draft");
+		return $instance->request("GET", "/posts/draft", array());
 	}
 	
 	public static function getSubmissionPosts() {
 		$instance = self::getInstance();
-		return $instance->request("GET", "/posts/submission");
+		return $instance->request("GET", "/posts/submission", array());
 	}
 	
 	public static function reblogPost($id, $reblog_key, $comment = "") {

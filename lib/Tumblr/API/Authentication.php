@@ -21,7 +21,7 @@ abstract class Authentication extends \Singleton
 	
 	// PECL OAuth resource handle
 	protected $oauth;
-	
+
 	// Sets the oauth_token / oauth_token_secret
 	protected function setToken($token, $token_secret) {
 		if(!($this->oauth instanceOf \OAuth)) {
